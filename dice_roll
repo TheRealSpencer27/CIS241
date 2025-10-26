@@ -1,0 +1,39 @@
+#!/bin/bash
+
+
+process1_roll_dice(){
+	local num_dice=$1
+	local num_sides=$2
+	local total=0
+	
+	echo "Rolling $num_dice dice with $num_sides sides..."
+
+	for ((i=1; i<=num_dice; i++));
+	do
+		roll=$(( RANDOM % num_sides + 1 ))
+		echo "Roll $i: $roll"
+		total=$((total + roll))
+	done
+
+	echo "Total: $total"
+}
+
+
+if [ $# -ne 2];
+then
+	echo "Usage: $0 <NUMBER_OF_DICE> <NUMBER_OF_SIDES>"
+	exit 1
+fi
+
+num_dice=$1
+num_sides=$2
+
+if ! [["num_dice" =~ ^[0-9] && "num_sides" =~ ^[0-9]+$ ]];
+then
+	echo "Error: Both arguments must be positive integers."
+	exit 1
+fi
+
+process1_roll_dice "$num_dice" "$num_sides"
+
+#I ended up looking up how to use the random function for bash in order to get a random outcome for the dice roll
